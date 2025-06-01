@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminLombaController extends Controller
 {
-  
+    // Pilihan tingkat lomba
     public static array $tingkatOptions = [
         'Universitas' => 'Universitas',
         'Kabupaten/Kota' => 'Kabupaten/Kota',

@@ -16,6 +16,7 @@ class PendaftaranLomba extends Model
         'no_telp',
         'jurusan',
         'fakultas',
+        // anggota 1-5
         'anggota1_nama', 'anggota1_nim', 'anggota1_jurusan', 'anggota1_fakultas', 'anggota1_no_telp',
         'anggota2_nama', 'anggota2_nim', 'anggota2_jurusan', 'anggota2_fakultas', 'anggota2_no_telp',
         'anggota3_nama', 'anggota3_nim', 'anggota3_jurusan', 'anggota3_fakultas', 'anggota3_no_telp',
