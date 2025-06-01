@@ -12,4 +12,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('lomba', AdminLombaController::class);
+
+    Route::controller(LombaController::class)->group(function () {
+        Route::get('/lomba', 'index')->name('lomba.index');
+        Route::get('/lomba/{lomba}', 'show')->name('lomba.show');
+        Route::get('/lomba/{lomba}/daftar', 'formDaftar')->name('lomba.daftar.form');
+        Route::post('/lomba/{lomba}/daftar', 'daftar')->name('lomba.daftar');
+    });
 });
