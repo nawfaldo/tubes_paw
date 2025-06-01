@@ -6,33 +6,22 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Mahasiswa extends Authenticatable
+class Admin extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
-    protected $table = 'mahasiswa';
+    protected $table = 'admin';
     
     protected $fillable = [
-        'nim',
+        'nip',
         'nama',
         'email',
         'password',
-        'jurusan',
-        'fakultas',
+        'jabatan',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
-
-    public function prestasi()
-    {
-        return $this->hasMany(Prestasi::class);
-    }
-
-    public function pendaftaranLomba()
-    {
-        return $this->hasMany(PendaftaranLomba::class);
-    }
 } 

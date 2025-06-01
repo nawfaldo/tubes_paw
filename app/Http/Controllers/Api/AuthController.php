@@ -26,7 +26,6 @@ class AuthController extends Controller
                 'message' => 'Role tidak valid',
             ], 400);
         }
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -41,7 +40,6 @@ class AuthController extends Controller
         }
 
         $credentials = $request->only('email', 'password');
-
         switch ($role) {
             case 'mahasiswa':
                 $user = Mahasiswa::where('email', $credentials['email'])->first();
@@ -66,7 +64,6 @@ class AuthController extends Controller
             'email' => $user->email,
             'role' => $role,
         ];
-
         return response()->json([
             'status' => 'success',
             'message' => 'Login berhasil',
@@ -236,4 +233,3 @@ class AuthController extends Controller
         ], 201);
     }
 }
-

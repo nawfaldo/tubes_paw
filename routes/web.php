@@ -29,4 +29,19 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::get('/lomba/{lomba}/daftar', 'formDaftar')->name('lomba.daftar.form');
         Route::post('/lomba/{lomba}/daftar', 'daftar')->name('lomba.daftar');
     });
+
+
+});
+
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('prestasi', AdminPrestasiController::class);
+    Route::resource('lomba', AdminLombaController::class);
+    Route::resource('mahasiswa', AdminMahasiswaController::class);
+    Route::get('/pendaftaran-lomba/{pendaftaran}', [AdminMahasiswaController::class, 'showPendaftaran'])->name('mahasiswa.pendaftaran.show');
+    Route::post('/prestasi/{prestasi}/approve', [AdminPrestasiController::class, 'approve'])->name('prestasi.approve');
+    Route::post('/prestasi/{prestasi}/reject', [AdminPrestasiController::class, 'reject'])->name('prestasi.reject');
+    Route::get('/laporan', function() {
+        return view('admin.laporan.index');
+    })->name('laporan.index');
 });

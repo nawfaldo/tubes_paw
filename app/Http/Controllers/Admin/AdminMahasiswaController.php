@@ -4,44 +4,24 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mahasiswa;
-use App\Models\Lomba;
-use App\Models\PendaftaranLomba;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class AdminMahasiswaController extends Controller
 {
     public function index()
     {
-        $pendaftaran = PendaftaranLomba::with(['mahasiswa', 'lomba'])->orderBy('created_at', 'desc')->get();
+        $pendaftaran = \App\Models\PendaftaranLomba::with(['mahasiswa', 'lomba'])->orderBy('created_at', 'desc')->get();
         return view('admin.mahasiswa.index', compact('pendaftaran'));
     }
 
     public function create()
     {
-        $mahasiswas = Mahasiswa::orderBy('nim')->get();
-        $lombas = Lomba::where('status', 'aktif')->orderBy('nama_lomba')->get();
-        return view('admin.mahasiswa.create', compact('mahasiswas', 'lombas'));
+        return view('admin.mahasiswa.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswa,id',
-            'lomba_id' => 'required|exists:lomba,id',
-            'jurusan' => 'required',
-            'fakultas' => 'required',
-            'no_telp' => 'required',
-        ]);
-
-        $data = $request->all();
-        $data['status'] = 'pending';
-
-        PendaftaranLomba::create($data);
-
-        return redirect()->route('admin.mahasiswa.index')
-            ->with('success', 'Pendaftaran lomba berhasil ditambahkan');
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
 
     public function show(Mahasiswa $mahasiswa)
@@ -49,63 +29,25 @@ class AdminMahasiswaController extends Controller
         return view('admin.mahasiswa.show', compact('mahasiswa'));
     }
 
-    public function edit($id)
+    public function edit(Mahasiswa $mahasiswa)
     {
-        $pendaftaran = PendaftaranLomba::findOrFail($id);
-        $mahasiswas = Mahasiswa::orderBy('nim')->get();
-        $lombas = Lomba::orderBy('nama_lomba')->get();
-        return view('admin.mahasiswa.edit', compact('pendaftaran', 'mahasiswas', 'lombas'));
+        return view('admin.mahasiswa.edit', compact('mahasiswa'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswa,id',
-            'lomba_id' => 'required|exists:lomba,id',
-            'jurusan' => 'required',
-            'fakultas' => 'required',
-            'no_telp' => 'required',
-            'status' => 'required|in:pending,diterima,ditolak',
-        ]);
-
-        $pendaftaran = PendaftaranLomba::findOrFail($id);
-        $pendaftaran->update($request->all());
-
-        return redirect()->route('admin.mahasiswa.index')
-            ->with('success', 'Data pendaftaran lomba berhasil diperbarui');
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil diupdate.');
     }
 
-    public function destroy($id)
+    public function destroy(Mahasiswa $mahasiswa)
     {
-        $pendaftaran = PendaftaranLomba::findOrFail($id);
-        $pendaftaran->delete();
-
-        return redirect()->route('admin.mahasiswa.index')
-            ->with('success', 'Data pendaftaran lomba berhasil dihapus');
+        $mahasiswa->delete();
+        return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil dihapus.');
     }
 
     public function showPendaftaran($id)
     {
-        $pendaftaran = PendaftaranLomba::with(['mahasiswa', 'lomba'])->findOrFail($id);
+        $pendaftaran = \App\Models\PendaftaranLomba::with(['mahasiswa', 'lomba'])->findOrFail($id);
         return view('admin.mahasiswa.pendaftaran_show', compact('pendaftaran'));
-    }
-
-    public function storePendaftaran(Request $request)
-    {
-        $request->validate([
-            'mahasiswa_id' => 'required|exists:mahasiswa,id',
-            'lomba_id' => 'required|exists:lomba,id',
-            'jurusan' => 'required',
-            'fakultas' => 'required',
-            'no_telp' => 'required',
-        ]);
-
-        $data = $request->all();
-        $data['status'] = 'pending';
-
-        PendaftaranLomba::create($data);
-
-        return redirect()->route('admin.mahasiswa.index')
-            ->with('success', 'Pendaftaran lomba berhasil ditambahkan');
     }
 } 
