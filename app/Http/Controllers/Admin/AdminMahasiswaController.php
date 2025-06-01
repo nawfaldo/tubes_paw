@@ -21,8 +21,7 @@ class AdminMahasiswaController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi dan simpan data mahasiswa
-        // ...
+       
         return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil ditambahkan.');
     }
 
@@ -38,8 +37,7 @@ class AdminMahasiswaController extends Controller
 
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        // Validasi dan update data mahasiswa
-        // ...
+        
         return redirect()->route('admin.mahasiswa.index')->with('success', 'Mahasiswa berhasil diupdate.');
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminLombaController extends Controller
 {
-    // Pilihan tingkat lomba
+    
     public static array $tingkatOptions = [
         'Universitas' => 'Universitas',
         'Kabupaten/Kota' => 'Kabupaten/Kota',
@@ -84,7 +84,7 @@ class AdminLombaController extends Controller
 
         $posterPath = $lomba->poster;
         if ($request->hasFile('poster')) {
-            // Hapus poster lama jika ada
+            
             if ($lomba->poster && \Storage::disk('public')->exists($lomba->poster)) {
                 \Storage::disk('public')->delete($lomba->poster);
             }
