@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('lomba', AdminLombaController::class);
 
+    Route::controller(PrestasiController::class)->group(function () {
+        Route::get('/prestasi', 'index')->name('prestasi.index');
+        Route::get('/prestasi/create', 'create')->name('prestasi.create');
+        Route::post('/prestasi', 'store')->name('prestasi.store');
+        Route::get('/prestasi/{prestasi}', 'show')->name('prestasi.show');
+        Route::get('/prestasi/{prestasi}/edit', 'edit')->name('prestasi.edit');
+        Route::put('/prestasi/{prestasi}', 'update')->name('prestasi.update');
+        Route::delete('/prestasi/{prestasi}', 'destroy')->name('prestasi.destroy');
+    });
+    
     Route::controller(LombaController::class)->group(function () {
         Route::get('/lomba', 'index')->name('lomba.index');
         Route::get('/lomba/{lomba}', 'show')->name('lomba.show');
