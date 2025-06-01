@@ -19,11 +19,17 @@ class Mahasiswa extends Authenticatable
         'password',
         'jurusan',
         'fakultas',
+        'no_telp',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     public function prestasi()
